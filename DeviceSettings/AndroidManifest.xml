@@ -38,7 +38,7 @@
         android:directBootAware="true"
         android:icon="@drawable/ic_settings_device"
         android:label="@string/device_title"
-        android:theme="@style/AppTheme">
+        android:theme="@style/Theme.SubSettingsBase">
 
         <!-- DC-Dimming Tile -->
         <service
@@ -62,9 +62,6 @@
             <meta-data
                 android:name="com.android.settings.icon"
                 android:resource="@drawable/ic_settings_device" />
-            <meta-data
-                android:name="com.android.settings.bg.hint"
-                android:resource="@color/settings_background" />
             <meta-data
                 android:name="com.android.settings.category"
                 android:value="com.android.settings.category.ia.homepage" />
