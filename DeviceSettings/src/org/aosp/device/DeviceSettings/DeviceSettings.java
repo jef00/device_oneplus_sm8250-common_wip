@@ -56,6 +56,7 @@ public class DeviceSettings extends PreferenceFragment
     public static final String KEY_VIBSTRENGTH = "vib_strength";
     public static final String KEY_TOUCHPANEL_CATEGORY = "touchpanel";
     public static final String KEY_GAME_SWITCH = "game_mode";
+    public static final String KEY_EDGE_TOUCH = "edge_touch";
 
     private static final String PREF_DOZE = "advanced_doze_settings";
     private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
@@ -72,6 +73,7 @@ public class DeviceSettings extends PreferenceFragment
     private static TwoStatePreference mDCModeSwitch;
     private static TwoStatePreference mHBMModeSwitch;
     private static TwoStatePreference mGameModeSwitch;
+    private static TwoStatePreference mEdgeTouchSwitch;
     private static TwoStatePreference mAutoHBMSwitch;
     private static TwoStatePreference mMuteMedia;
     private static TwoStatePreference mEnableDolbyAtmos;
@@ -142,6 +144,11 @@ public class DeviceSettings extends PreferenceFragment
         } else {
             getPreferenceScreen().removePreference(findPreference(KEY_TOUCHPANEL_CATEGORY));
         }
+
+        mEdgeTouchSwitch = (TwoStatePreference) findPreference(KEY_EDGE_TOUCH);
+        mEdgeTouchSwitch.setEnabled(EdgeTouchSwitch.isSupported());
+        mEdgeTouchSwitch.setChecked(EdgeTouchSwitch.isCurrentlyEnabled(this.getContext()));
+        mEdgeTouchSwitch.setOnPreferenceChangeListener(new EdgeTouchSwitch());
 
         mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
