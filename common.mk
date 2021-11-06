@@ -365,13 +365,6 @@ PRODUCT_PACKAGES += \
     libOmxVenc \
     libstagefrighthw
 
-# OnePlus
-PRODUCT_PACKAGES += \
-    oneplus-fwk.oneplus_kona
-
-PRODUCT_BOOT_JARS += \
-    oneplus-fwk.oneplus_kona
-
 # Power
 PRODUCT_PACKAGES += \
     android.hardware.power-service-qti \
@@ -539,9 +532,6 @@ PRODUCT_PACKAGES += \
     libnl \
     libwfdaac_vendor
 
-PRODUCT_BOOT_JARS += \
-    WfdCommon
-
 PRODUCT_BUILD_SUPER_PARTITION := false
 PRODUCT_USE_DYNAMIC_PARTITIONS := true
 
@@ -554,3 +544,7 @@ PRODUCT_DEFAULT_PROPERTY_OVERRIDES += \
     ro.surface_flinger.set_touch_timer_ms=200 \
     ro.surface_flinger.use_color_management=true \
     ro.surface_flinger.wcg_composition_dataspace=143261696
+
+# inherit extras stuff
+-include vendor/oneplus/extras/OnePlus-fwk.mk
+-include vendor/oneplus/extras/WfdCommon.mk
