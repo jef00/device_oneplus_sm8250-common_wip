@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Build;
 import android.os.Bundle;
-import android.os.Vibrator;
+import android.os.VibrationEffect;
 import android.provider.Settings;
 import androidx.preference.ListPreference;
 import androidx.preference.Preference;
@@ -62,7 +62,6 @@ public class DeviceSettings extends PreferenceFragment
     private static final String KEY_ENABLE_DOLBY_ATMOS = "enable_dolby_atmos";
 
     private static final String FILE_LEVEL = "/sys/devices/platform/soc/a8c000.i2c/i2c-3/3-005a/leds/vibrator/level";
-    private static final long testVibrationPattern[] = {0,50};
     public static final String DEFAULT = "3";
 
     private DolbySwitch mDolbySwitch;
@@ -80,8 +79,6 @@ public class DeviceSettings extends PreferenceFragment
 
     private VibratorStrengthPreference mVibratorStrengthPreference;
     private CustomSeekBarPreference mFpsInfoTextSizePreference;
-
-    private Vibrator mVibrator;
 
     @Override
     public void onCreatePreferences(Bundle savedInstanceState, String rootKey) {
@@ -150,7 +147,6 @@ public class DeviceSettings extends PreferenceFragment
         mEdgeTouchSwitch.setChecked(EdgeTouchSwitch.isCurrentlyEnabled(this.getContext()));
         mEdgeTouchSwitch.setOnPreferenceChangeListener(new EdgeTouchSwitch());
 
-        mVibrator = (Vibrator) getContext().getSystemService(Context.VIBRATOR_SERVICE);
         SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
 
         mVibratorStrengthPreference =  (VibratorStrengthPreference) findPreference(KEY_VIBSTRENGTH);
@@ -234,7 +230,7 @@ public class DeviceSettings extends PreferenceFragment
             SharedPreferences sharedPrefs = PreferenceManager.getDefaultSharedPreferences(getContext());
             sharedPrefs.edit().putInt(KEY_VIBSTRENGTH, value).commit();
             Utils.writeValue(FILE_LEVEL, String.valueOf(value));
-            mVibrator.vibrate(testVibrationPattern, -1);
+            VibrationUtils.doHapticFeedback(getContext(), VibrationEffect.EFFECT_CLICK);
         }
         return true;
     }
